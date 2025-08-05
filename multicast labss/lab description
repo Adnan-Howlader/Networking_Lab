@@ -1,0 +1,40 @@
+Multicast Lab Description – GNS3 Topology
+Lab Objective
+This lab demonstrates a basic multicast network configuration using PIM Dense Mode (PIM-DM) for multicast routing, with IGMP for group membership management. The topology shows how multicast traffic is sent from a multicast sender to a multicast receiver client across a routed network using Cisco routers in GNS3.
+
+Topology Overview
+The network includes 6 routers (R1–R6) and a Layer 2 switch (Switch1).
+
+The multicast traffic source is R5, sending packets to multicast group 239.1.1.1.
+
+The multicast receiver is R4, configured to join the multicast group 239.1.1.1 using IGMP.
+
+PIM Dense Mode is enabled on all interfaces that are part of the multicast routing path.
+
+OSPF is used as the underlying IGP to establish unicast routing connectivity across the network.
+
+Switch1 is used to connect R4 (receiver) and R6 (another router in the Multicast Server LAN).
+
+
+Configuration Details R4(Multicast Reciver):
+Here I used A router as Multicast Client
+
+
+interface Gi1/0
+ ip address 192.168.3.X 255.255.255.0
+ ip igmp join-group 239.1.1.1
+
+
+
+R5 (Multicast Source):
+ping 239.1.1.1 repeat 1000
+
+
+
+Expected Behavior
+R4 (Multicast Receiver) should receive multicast packets from R5 (Sender) via the multicast group 239.1.1.1.
+
+PIM-DM will flood multicast traffic initially and prune branches without receivers.
+
+The LHR (R1) and FHR (R2) are responsible for handling multicast group membership and traffic flow.
+
